@@ -112,6 +112,10 @@ net.ipv6.conf.default.accept_redirects = 0
 net.ipv4.icmp_echo_ignore_all = 1
 EOF
 
+# update editor
+log updating default editor to vi
+update-alternatives --set editor /usr/bin/vim.basic
+
 # configure unattended upgrades
 log configuring unattended upgrades
 
