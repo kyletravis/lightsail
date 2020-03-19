@@ -121,9 +121,16 @@ update-alternatives --set editor /usr/bin/vim.basic
 log updating sudoers
 echo "kyle ALL=(ALL) ALL" > /etc/sudoers.d/90-cloud-init-users
 
+# remove ubuntu user
+log removing ubuntu user
+userdel -r ubuntu
+
 # configure unattended upgrades
 log configuring unattended upgrades
-#TODO figure this out
+#TODO this isn't working
+sed -i \
+    -e 's%//      "\${distro_id}:\${distro_codename}-updates";%        "\${distro_id}:\${distro_codename}-updates";%' \
+    /etc/apt/apt.conf.d/50unattended-upgrades
 
 # set history format
 log setting history format
@@ -132,7 +139,7 @@ echo 'export HISTTIMEFORMAT="%Y/%m/%d %T "' >> /etc/profile.d/set_hist.sh
 # reconfigure sar
 log reconfiguring sar
 sed -i -e "s/false/true/g" /etc/default/sysstat
-#TODO figure out a way to reconfigure crontab non interactively
+sed -i -e 's/^5-55\/10/\*/' /etc/cron.d/sysstat
 systemctl enable sysstat
 systemctl restart sysstat
 
