@@ -157,7 +157,21 @@ soft    nproc     131072
 EOF
 
 # setup ddns
-#TODO
+log laying down namecheap template for dynamic dns client. this will need to be configured and started at a later date
+DEBIAN_FRONTEND=noninteractive apt-get -yq install ddclient
+cat > /etc/ddclient.conf <<EOF
+daemon=300
+ssl=yes
+use=web, web=dynamicdns.park-your-domain.com/getip
+protocol=namecheap
+server=dynamicdns.park-your-domain.com
+login=<host>
+password=<password>
+<subdomain>
+EOF
+chmod 600 /etc/ddclient.conf
+systemctl stop ddclient
+systemctl disable ddclient
 
 # enable firewall
 log enabling firewall
