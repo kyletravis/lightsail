@@ -124,10 +124,12 @@ userdel -r ubuntu
 
 # configure unattended upgrades
 log configuring unattended upgrades
-#TODO this isn't working
 sed -i \
-    -e 's%//      "\${distro_id}:\${distro_codename}-updates";%        "\${distro_id}:\${distro_codename}-updates";%' \
+#TODO    -e 's%//      "\${distro_id}:\${distro_codename}-updates";%        "\${distro_id}:\${distro_codename}-updates";%' \
+    -e 's%//Unattended-Upgrade::Automatic-Reboot "false";%Unattended-Upgrade::Automatic-Reboot "true";%' \
+    -e 's%//Unattended-Upgrade::Automatic-Reboot-Time "02:00";%Unattended-Upgrade::Automatic-Reboot-Time "08:00";%' \
     /etc/apt/apt.conf.d/50unattended-upgrades
+systemctl restart unattended-upgrades
 
 # set history format
 log setting history format
