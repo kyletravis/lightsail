@@ -66,6 +66,7 @@ log locking down su
 dpkg-statoverride --update --add root admin 4750 /bin/su
 
 # setup umasks
+#TODO change this to global
 log setting umasks
 echo "umask 0077" >> /root/.bash_profile
 chmod 600 /root/.bash_profile
@@ -122,6 +123,7 @@ echo "kyle ALL=(ALL) ALL" > /etc/sudoers.d/90-cloud-init-users
 
 # configure unattended upgrades
 log configuring unattended upgrades
+#TODO figure this out
 
 # set history format
 log setting history format
@@ -135,10 +137,13 @@ systemctl enable sysstat
 systemctl restart sysstat
 
 # configure chrony
+#TODO
 
 # edit limits
+#TODO
 
 # setup ddns
+#TODO
 
 # enable firewall
 log enabling firewall
