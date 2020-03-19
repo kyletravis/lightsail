@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# global environment variables
+THISHOST=$1
+
 # logging setup
 LOGFILE=/var/log/initial_setup.log
 
@@ -122,13 +125,16 @@ echo "kyle ALL=(ALL) ALL" > /etc/sudoers.d/90-cloud-init-users
 log removing ubuntu user
 userdel -r ubuntu
 
+#TODO why is this not working?    -e 's%//      "\${distro_id}:\${distro_codename}-updates";%        "\${distro_id}:\${distro_codename}-updates";%' \
 # configure unattended upgrades
 log configuring unattended upgrades
 sed -i \
-#TODO    -e 's%//      "\${distro_id}:\${distro_codename}-updates";%        "\${distro_id}:\${distro_codename}-updates";%' \
     -e 's%//Unattended-Upgrade::Automatic-Reboot "false";%Unattended-Upgrade::Automatic-Reboot "true";%' \
     -e 's%//Unattended-Upgrade::Automatic-Reboot-Time "02:00";%Unattended-Upgrade::Automatic-Reboot-Time "08:00";%' \
     /etc/apt/apt.conf.d/50unattended-upgrades
+cat >>/etc/apt/apt.conf.d/20auto-upgrades <<EOF
+APT::Periodic::AutocleanInterval "7";
+EOF
 systemctl restart unattended-upgrades
 
 # set history format
@@ -174,6 +180,20 @@ EOF
 chmod 600 /etc/ddclient.conf
 systemctl stop ddclient
 systemctl disable ddclient
+
+# setup hostname
+log setting hostname
+hostnamectl set-hostname $THISHOST
+
+#TODO why is this timing out? SYN-ACK?
+# setup email sending capabilities
+#log setting up email
+#DEBIAN_FRONTEND=noninteractive apt-get -yq install mailutils
+#sed -i \
+#    -e 's/inet_interfaces = all/inet_interfaces = loopback-only/' \
+#    -e "s/^myhostname.*/myhostname = $THISHOST/" \
+#    /etc/postfix/main.cf
+#systemctl restart postfix
 
 # enable firewall
 log enabling firewall
