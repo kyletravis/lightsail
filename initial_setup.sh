@@ -120,7 +120,7 @@ update-alternatives --set editor /usr/bin/vim.basic
 
 # update sudoers
 log updating sudoers
-echo "kyle ALL=(ALL) ALL" > /etc/sudoers.d/90-cloud-init-users
+echo "kyle ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/90-cloud-init-users
 
 # remove ubuntu user
 log removing ubuntu user
