@@ -116,6 +116,10 @@ EOF
 log updating default editor to vi
 update-alternatives --set editor /usr/bin/vim.basic
 
+# update sudoers
+log updating sudoers
+echo "kyle ALL=(ALL) ALL" > /etc/sudoers.d/90-cloud-init-users
+
 # configure unattended upgrades
 log configuring unattended upgrades
 
