@@ -47,6 +47,12 @@ EOF
 systemctl start fail2ban
 systemctl enable fail2ban
 
+# lockdown shared memory
+log locking down shared memory
+cat >>/etc/fstab <<EOF
+none /dev/shm tmpfs defaults,ro 0 0
+EOF
+
 # adding kyle user
 log adding user kyle
 useradd -m -g admin -s /bin/bash kyle
