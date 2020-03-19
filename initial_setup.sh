@@ -18,7 +18,7 @@ logsetup
 # update and install apps
 log app install
 apt update && apt dist-upgrade -y
-apt install sysstat htop tmux ufw fail2ban unattended-upgrades chrony -y
+apt install sysstat htop tmux ufw fail2ban unattended-upgrades chrony vim -y
 
 # reconfigure sshd
 log reconfiguring sshd
@@ -65,14 +65,11 @@ chmod 600 /home/kyle/.ssh/authorized_keys
 log locking down su
 dpkg-statoverride --update --add root admin 4750 /bin/su
 
-# setup umasks
-#TODO change this to global
-log setting umasks
-echo "umask 0077" >> /root/.bash_profile
-chmod 600 /root/.bash_profile
-echo "umask 0077" >> /home/kyle/.bash_profile
-chown kyle:admin /home/kyle/.bash_profile
-chmod 600 /home/kyle/.bash_profile
+# setup umasks and editor
+log setting umasks and default editor
+echo 'umask 0077' >> /etc/profile
+echo 'export VISUAL=vim' >> /etc/profile
+echo 'export EDITOR="$VISUAL"' >> /etc/profile
 
 # update sysctl variables
 cat >/etc/sysctl.conf <<EOF
