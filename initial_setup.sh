@@ -20,7 +20,8 @@ logsetup
 
 # update and install apps
 log app install
-apt update && apt dist-upgrade -y
+apt update
+DEBIAN_FRONTEND=noninteractive apt -q -y -o "Dpkg::Options::=--force-confdef" -o "Dpkg::Options::=--force-confold" dist-upgrade
 apt install sysstat htop tmux ufw fail2ban unattended-upgrades chrony vim -y
 
 # reconfigure sshd
