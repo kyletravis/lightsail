@@ -144,7 +144,10 @@ systemctl enable sysstat
 systemctl restart sysstat
 
 # configure chrony
-#TODO
+log configuring chrony
+sed -i '/^pool ntp.ubuntu.com        iburst maxsources 4/i server 169.254.169.123 prefer iburst minpoll 4 maxpoll 4' /etc/chrony/chrony.conf
+systemctl restart chrony
+systemctl enable chrony
 
 # edit limits
 log configuring ulimits
