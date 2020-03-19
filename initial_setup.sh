@@ -147,7 +147,14 @@ systemctl restart sysstat
 #TODO
 
 # edit limits
-#TODO
+log configuring ulimits
+cat >/etc/security/limits.conf <<EOF
+*       -       nofile  131072
+*       -       nproc   131072
+EOF
+cat >/etc/security/limits.d/20-nproc.conf <<EOF
+soft    nproc     131072
+EOF
 
 # setup ddns
 #TODO
