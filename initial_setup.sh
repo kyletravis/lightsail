@@ -199,7 +199,7 @@ hostnamectl set-hostname $THISHOST
 # enable firewall
 log enabling firewall
 ufw allow 22022/tcp
-ufw enable
+echo "y" | ufw enable
 
 # restart
 log restarting
