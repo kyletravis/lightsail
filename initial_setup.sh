@@ -126,12 +126,12 @@ echo "kyle ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/90-cloud-init-users
 log removing ubuntu user
 userdel -r ubuntu
 
-#TODO why is this not working?    -e 's%//      "\${distro_id}:\${distro_codename}-updates";%        "\${distro_id}:\${distro_codename}-updates";%' \
 # configure unattended upgrades
 log configuring unattended upgrades
 sed -i \
     -e 's%//Unattended-Upgrade::Automatic-Reboot "false";%Unattended-Upgrade::Automatic-Reboot "true";%' \
     -e 's%//Unattended-Upgrade::Automatic-Reboot-Time "02:00";%Unattended-Upgrade::Automatic-Reboot-Time "08:00";%' \
+    -e 's#//.*"${distro_id}:${distro_codename}-updates";#      "${distro_id}:${distro_codename}-updates";#' \
     /etc/apt/apt.conf.d/50unattended-upgrades
 cat >>/etc/apt/apt.conf.d/20auto-upgrades <<EOF
 APT::Periodic::AutocleanInterval "7";
