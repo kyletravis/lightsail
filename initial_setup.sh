@@ -131,7 +131,7 @@ log configuring unattended upgrades
 sed -i \
     -e 's%//Unattended-Upgrade::Automatic-Reboot "false";%Unattended-Upgrade::Automatic-Reboot "true";%' \
     -e 's%//Unattended-Upgrade::Automatic-Reboot-Time "02:00";%Unattended-Upgrade::Automatic-Reboot-Time "08:00";%' \
-    -e 's#//.*"${distro_id}:${distro_codename}-updates";#      "${distro_id}:${distro_codename}-updates";#' \
+    -e 's#//.*"${distro_id}:${distro_codename}-updates";#        "${distro_id}:${distro_codename}-updates";#' \
     /etc/apt/apt.conf.d/50unattended-upgrades
 cat >>/etc/apt/apt.conf.d/20auto-upgrades <<EOF
 APT::Periodic::AutocleanInterval "7";
